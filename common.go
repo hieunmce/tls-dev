@@ -506,6 +506,51 @@ type Config struct {
 	serverInitOnce sync.Once // guards calling (*Config).serverInit
 }
 
+// Clone returns a shallow clone of c. It is safe to clone a Config that is
+// being used concurrently by a TLS client or server.
+func (c *Config) Clone() *Config {
+	// Running serverInit ensures that it's safe to read
+	// SessionTicketsDisabled.
+	c.serverInitOnce.Do(func() { c.serverInit() })
+	return &Config{
+		Rand:                      c.Rand,
+		Time:                      c.Time,
+		Certificates:              c.Certificates,
+		NameToCertificate:         c.NameToCertificate,
+		RootCAs:                   c.RootCAs,
+		NextProtos:                c.NextProtos,
+		ServerName:                c.ServerName,
+		ClientAuth:                c.ClientAuth,
+		ClientCAs:                 c.ClientCAs,
+		ClientCertificateTypes:    c.ClientCertificateTypes,
+		InsecureSkipVerify:        c.InsecureSkipVerify,
+		CipherSuites:              c.CipherSuites,
+		PreferServerCipherSuites:  c.PreferServerCipherSuites,
+		SessionTicketsDisabled:    c.SessionTicketsDisabled,
+		SessionTicketKey:          c.SessionTicketKey,
+		ClientSessionCache:        c.ClientSessionCache,
+		ServerSessionCache:        c.ServerSessionCache,
+		MinVersion:                c.MinVersion,
+		MaxVersion:                c.MaxVersion,
+		CurvePreferences:          c.CurvePreferences,
+		DefaultCurves:             c.DefaultCurves,
+		ChannelID:                 c.ChannelID,
+		RequestChannelID:          c.RequestChannelID,
+		TokenBindingParams:        c.TokenBindingParams,
+		TokenBindingVersion:       c.TokenBindingVersion,
+		ExpectTokenBindingParams:  c.ExpectTokenBindingParams,
+		PreSharedKey:              c.PreSharedKey,
+		PreSharedKeyIdentity:      c.PreSharedKeyIdentity,
+		MaxEarlyDataSize:          c.MaxEarlyDataSize,
+		SRTPProtectionProfiles:    c.SRTPProtectionProfiles,
+		SignSignatureAlgorithms:   c.SignSignatureAlgorithms,
+		VerifySignatureAlgorithms: c.VerifySignatureAlgorithms,
+		QUICTransportParams:       c.QUICTransportParams,
+		CertCompressionAlgs:       c.CertCompressionAlgs,
+		Bugs:                      c.Bugs,
+	}
+}
+
 type BadValue int
 
 const (
