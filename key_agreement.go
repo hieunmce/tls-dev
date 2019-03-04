@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package ctls
+package tls
 
 import (
 	"crypto"
@@ -16,7 +16,7 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/hieunmce/ctls/hrss"
+	"github.com/hieunmce/tls-dev/hrss"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/ed25519"
 )

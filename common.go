@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package ctls
+package tls
 
 import (
 	"container/list"
@@ -1021,7 +1021,7 @@ type ProtocolBugs struct {
 	// additionally include the first application data record sent after the
 	// final Finished message in a handshake. (If the final Finished message
 	// is sent by the peer, this option has no effect.) This requires that
-	// the ctls rather than shim speak first in a given test.
+	// the tls rather than shim speak first in a given test.
 	PackAppDataWithHandshake bool
 
 	// SplitAndPackAppData, if true, causes application data in DTLS to be
@@ -1178,7 +1178,7 @@ type ProtocolBugs struct {
 	// supplied OCSP response on renegotiation.
 	SendOCSPResponseOnRenegotiation []byte
 
-	// SendExtensionOnCertificate, if not nil, causes the ctls to send the
+	// SendExtensionOnCertificate, if not nil, causes the tls to send the
 	// supplied bytes in the extensions on the Certificate message.
 	SendExtensionOnCertificate []byte
 

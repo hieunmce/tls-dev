@@ -12,7 +12,7 @@
 // OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-package ctls
+package tls
 
 import (
 	"bufio"
@@ -87,7 +87,7 @@ func (r *recordingConn) LogSpecial(message string, data []byte) {
 
 // WriteTo writes hex dumps to w that contains the recorded traffic.
 func (r *recordingConn) WriteTo(w io.Writer) {
-	fmt.Fprintf(w, ">>> ctls is %s, shim is %s\n", r.local, r.peer)
+	fmt.Fprintf(w, ">>> tls is %s, shim is %s\n", r.local, r.peer)
 	for i, flow := range r.flows {
 		switch flow.flowType {
 		case readFlow:
