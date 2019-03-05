@@ -22,6 +22,31 @@ import (
 	"golang.org/x/crypto/ed25519"
 )
 
+// ShimConfigurations is used with the “json” package and represents a shim
+// config file.
+type ShimConfiguration struct {
+	// DisabledTests maps from a glob-based pattern to a freeform string.
+	// The glob pattern is used to exclude tests from being run and the
+	// freeform string is unparsed but expected to explain why the test is
+	// disabled.
+	DisabledTests map[string]string
+
+	// ErrorMap maps from expected error strings to the correct error
+	// string for the shim in question. For example, it might map
+	// “:NO_SHARED_CIPHER:” (a BoringSSL error string) to something
+	// like “SSL_ERROR_NO_CYPHER_OVERLAP”.
+	ErrorMap map[string]string
+
+	// HalfRTTTickets is the number of half-RTT tickets the client should
+	// expect before half-RTT data when testing 0-RTT.
+	HalfRTTTickets int
+}
+
+// Setup shimConfig defaults aligning with BoringSSL.
+var shimConfig ShimConfiguration = ShimConfiguration{
+	HalfRTTTickets: 2,
+}
+
 type clientHandshakeState struct {
 	c             *Conn
 	serverHello   *serverHelloMsg
